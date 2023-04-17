@@ -3,9 +3,11 @@ attrs==23.1.0
 Django==4.0.2
 django-debug-toolbar==4.0.0
 djangorestframework==3.14.0
+djangorestframework-simplejwt==5.2.2
 drf-spectacular==0.26.2
 inflection==0.5.1
 jsonschema==4.17.3
+PyJWT==2.6.0
 pyrsistent==0.19.3
 python-dotenv==1.0.0
 pytz==2023.3
