@@ -15,6 +15,6 @@ class BorrowingViewSet(viewsets.ModelViewSet):
     serializer_class = BorrowingSerializer
 
     def get_serializer_class(self) -> Type[Serializer]:
-        if self.action in ("list", "retrieve"):
-            return self.serializer_class
-        return BorrowingDetailSerializer
+        if self.action == "retrieve":
+            return BorrowingDetailSerializer
+        return self.serializer_class

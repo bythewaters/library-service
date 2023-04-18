@@ -1,6 +1,7 @@
 from rest_framework import serializers
-
+from books.serializers import BookSerializer
 from borrowing.models import Borrowing
+from users.serializers import UserSerializer
 
 
 class BorrowingSerializer(serializers.ModelSerializer):
@@ -17,11 +18,9 @@ class BorrowingSerializer(serializers.ModelSerializer):
 
 
 class BorrowingDetailSerializer(BorrowingSerializer):
-    books = serializers.SlugRelatedField(
+    books = BookSerializer(
         read_only=True,
-        slug_field="title",
     )
-    users = serializers.SlugRelatedField(
+    users = UserSerializer(
         read_only=True,
-        slug_field="email"
     )
