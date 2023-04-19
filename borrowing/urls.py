@@ -7,6 +7,8 @@ router = routers.DefaultRouter()
 router.register("borrowings", BorrowingViewSet)
 router.register("borrowing/create", BorrowingCreateViewSet)
 
-urlpatterns = [path("", include(router.urls))]
+urlpatterns = [
+    path("", include(router.urls)),
+]
 
 app_name = "borrowing"

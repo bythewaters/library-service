@@ -30,3 +30,4 @@ class BorrowingCreateViewSet(
 ):
     queryset = Borrowing.objects.all()
     serializer_class = BorrowingCreateSerializer
+
