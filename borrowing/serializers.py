@@ -20,3 +20,14 @@ class BorrowingDetailSerializer(BorrowingSerializer):
     books = BookSerializer(
         read_only=True,
     )
+
+
+class BorrowingCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Borrowing
+        fields = [
+            "users",
+            "books",
+            "borrow_date",
+            "expected_return_date",
+        ]

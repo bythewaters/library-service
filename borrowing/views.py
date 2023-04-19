@@ -6,7 +6,7 @@ from rest_framework.serializers import Serializer
 from borrowing.models import Borrowing
 from borrowing.serializers import (
     BorrowingSerializer,
-    BorrowingDetailSerializer
+    BorrowingDetailSerializer, BorrowingCreateSerializer
 )
 
 
@@ -22,3 +22,11 @@ class BorrowingViewSet(
         if self.action == "retrieve":
             return BorrowingDetailSerializer
         return self.serializer_class
+
+
+class BorrowingCreateViewSet(
+    mixins.CreateModelMixin,
+    viewsets.GenericViewSet
+):
+    queryset = Borrowing.objects.all()
+    serializer_class = BorrowingCreateSerializer
