@@ -13,6 +13,7 @@ from borrowing.serializers import (
 class BorrowingViewSet(
     mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
+    mixins.CreateModelMixin,
     viewsets.GenericViewSet
 ):
     queryset = Borrowing.objects.all()
@@ -22,13 +23,8 @@ class BorrowingViewSet(
     def get_serializer_class(self) -> Type[Serializer]:
         if self.action == "retrieve":
             return BorrowingDetailSerializer
+
+        if self.action == "create":
+            return BorrowingCreateSerializer
+
         return self.serializer_class
-
-
-class BorrowingCreateViewSet(
-    mixins.CreateModelMixin,
-    viewsets.GenericViewSet
-):
-    queryset = Borrowing.objects.all()
-    serializer_class = BorrowingCreateSerializer
-    permission_classes = (permissions.IsAuthenticated,)
