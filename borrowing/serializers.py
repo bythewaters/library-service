@@ -25,13 +25,22 @@ class BorrowingDetailSerializer(BorrowingSerializer):
 
 class BorrowingCreateSerializer(serializers.ModelSerializer):
     def validate(self, validated_data):
+        data = super(BorrowingCreateSerializer, self).validate(attrs=validated_data)
+        Borrowing.validate_date(
+            validated_data["borrow_date"],
+            validated_data["expected_return_date"],
+            serializers.ValidationError,
+        )
+
         book = validated_data.get("books")
         if not book:
             raise serializers.ValidationError("Book is required.")
 
         if book.inventory <= 0:
-            raise serializers.ValidationError("Book is not available for borrowing.")
-        return validated_data
+            raise serializers.ValidationError(
+                {"Books_error": "Book is not available for borrowing."}
+            )
+        return data
 
     class Meta:
         model = Borrowing

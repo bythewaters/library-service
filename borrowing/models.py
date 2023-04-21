@@ -1,9 +1,10 @@
+from datetime import datetime
+
 from django.core.exceptions import ValidationError
 from django.db import models
 
 from books.models import Book
 from library_service import settings
-from django.utils.translation import gettext_lazy as _
 
 
 class Borrowing(models.Model):
@@ -13,17 +14,28 @@ class Borrowing(models.Model):
     books = models.ForeignKey(Book, on_delete=models.CASCADE)
     users = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
-    class Meta:
-        unique_together = (
-            "borrow_date",
-            "expected_return_date",
-            "actual_return_date",
-        )
+    @staticmethod
+    def validate_date(borrow_date: datetime, expected_return_date, error_to_raise):
+        if borrow_date > expected_return_date:
+            raise error_to_raise(
+                {
+                    "Return_date_error": "Expected return date must be after borrow date."
+                }
+            )
 
     def clean(self) -> None:
-        if self.borrow_date > self.expected_return_date:
-            raise ValidationError(_("Expected return date must be after borrow date."))
+        Borrowing.validate_date(
+            self.borrow_date, self.expected_return_date, ValidationError
+        )
 
-    def save(self, *args, **kwargs) -> None:
-        self.clean()
-        super().save(*args, **kwargs)
+    def save(
+        self,
+        force_insert=False,
+        force_update=False,
+        using=None,
+        update_fields=None,
+    ):
+        self.full_clean()
+        return super(Borrowing, self).save(
+            force_insert, force_update, using, update_fields
+        )
