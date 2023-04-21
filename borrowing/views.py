@@ -32,3 +32,6 @@ class BorrowingViewSet(
             return BorrowingCreateSerializer
 
         return self.serializer_class
+
+    def perform_create(self, serializer: Serializer[Borrowing]) -> None:
+        serializer.save(users=self.request.user)
