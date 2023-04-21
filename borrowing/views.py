@@ -22,9 +22,11 @@ class BorrowingViewSet(
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self) -> QuerySet[Borrowing]:
+        """Return borrowings only for current user"""
         return Borrowing.objects.filter(users=self.request.user)
 
     def get_serializer_class(self) -> Type[Serializer]:
+        """Return serializer depending on the action"""
         if self.action == "retrieve":
             return BorrowingDetailSerializer
 
@@ -34,4 +36,5 @@ class BorrowingViewSet(
         return self.serializer_class
 
     def perform_create(self, serializer: Serializer[Borrowing]) -> None:
+        """Create borrowing only for current user"""
         serializer.save(users=self.request.user)
