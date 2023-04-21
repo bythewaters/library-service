@@ -1,5 +1,6 @@
 from typing import Type
 
+from django.db.models import QuerySet
 from rest_framework import viewsets, mixins, permissions
 from rest_framework.serializers import Serializer
 
@@ -19,6 +20,9 @@ class BorrowingViewSet(
     queryset = Borrowing.objects.all()
     serializer_class = BorrowingSerializer
     permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self) -> QuerySet[Borrowing]:
+        return Borrowing.objects.filter(users=self.request.user)
 
     def get_serializer_class(self) -> Type[Serializer]:
         if self.action == "retrieve":
