@@ -24,7 +24,7 @@ class BorrowingDetailSerializer(BorrowingSerializer):
 
 
 class BorrowingCreateSerializer(serializers.ModelSerializer):
-    def validate(self, validated_data):
+    def validate(self, validated_data: dict) -> dict:
         data = super(BorrowingCreateSerializer, self).validate(attrs=validated_data)
         Borrowing.validate_date(
             validated_data["borrow_date"],
@@ -51,9 +51,25 @@ class BorrowingCreateSerializer(serializers.ModelSerializer):
         ]
 
     @transaction.atomic
-    def create(self, validated_data):
+    def create(self, validated_data: dict) -> Borrowing:
         book = validated_data["books"]
         book.inventory -= 1
         book.save()
         borrowing = Borrowing.objects.create(**validated_data)
         return borrowing
+
+
+class BorrowingReturnBookSerializer(BorrowingSerializer):
+
+    class Meta:
+        model = Borrowing
+        fields = ["actual_return_date"]
+
+    def validate(self, attrs: dict) -> dict:
+        actual_return_date = attrs["actual_return_date"]
+
+        if actual_return_date:
+            raise serializers.ValidationError(
+                {"Borrowings": "This book already returned"}
+            )
+        return attrs
