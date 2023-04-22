@@ -25,7 +25,9 @@ class BorrowingDetailSerializer(BorrowingSerializer):
 
 class BorrowingCreateSerializer(serializers.ModelSerializer):
     def validate(self, validated_data: dict) -> dict:
-        data = super(BorrowingCreateSerializer, self).validate(attrs=validated_data)
+        data = super(
+            BorrowingCreateSerializer, self
+        ).validate(attrs=validated_data)
         Borrowing.validate_date(
             validated_data["borrow_date"],
             validated_data["expected_return_date"],

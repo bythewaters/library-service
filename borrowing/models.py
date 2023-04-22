@@ -12,15 +12,18 @@ class Borrowing(models.Model):
     expected_return_date = models.DateTimeField()
     actual_return_date = models.DateTimeField(null=True, blank=True)
     books = models.ForeignKey(Book, on_delete=models.CASCADE)
-    users = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    users = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )
 
     @staticmethod
-    def validate_date(borrow_date: datetime, expected_return_date, error_to_raise):
+    def validate_date(
+            borrow_date: datetime, expected_return_date, error_to_raise
+    ):
         if borrow_date > expected_return_date:
             raise error_to_raise(
-                {
-                    "Return_date_error": "Expected return date must be after borrow date."
-                }
+                {"Return_date_error":
+                    "Expected return date must be after borrow date."}
             )
 
     def clean(self) -> None:
@@ -29,11 +32,11 @@ class Borrowing(models.Model):
         )
 
     def save(
-        self,
-        force_insert=False,
-        force_update=False,
-        using=None,
-        update_fields=None,
+            self,
+            force_insert=False,
+            force_update=False,
+            using=None,
+            update_fields=None,
     ):
         self.full_clean()
         return super(Borrowing, self).save(
