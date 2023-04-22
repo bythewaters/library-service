@@ -65,7 +65,7 @@ class BorrowingCreateSerializer(serializers.ModelSerializer):
             f"Hello, you borrowed book: {book.title}.\n"
             f"Date borrow: {borrow_date}\n"
             f"Expected return date: {expected_return_date}\n"
-            f"Price per day: {book.daily_fee}\n"
+            f"Price per day: {book.daily_fee} $\n"
             f"Thank you! Good Bye!"
         )
         return borrowing
