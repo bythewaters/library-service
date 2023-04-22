@@ -14,6 +14,7 @@ from borrowing.serializers import (
     BorrowingCreateSerializer,
     BorrowingReturnBookSerializer,
 )
+from notifications.telegram_notification import send_to_telegram
 
 
 class BorrowingViewSet(

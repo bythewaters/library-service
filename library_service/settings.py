@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "users",
     "books",
     "borrowing",
+    "notifications",
 ]
 
 MIDDLEWARE = [
@@ -171,3 +172,6 @@ SPECTACULAR_SETTINGS = {
         "defaultModelExpandDepth": 2,
     },
 }
+
+TELEGRAM_API_TOKEN = os.getenv("TELEGRAM_API_TOKEN")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
