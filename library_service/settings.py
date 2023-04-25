@@ -176,7 +176,7 @@ SPECTACULAR_SETTINGS = {
 CELERY_BEAT_SCHEDULE = {
     "task-name": {
         "task": "borrowing.tasks.check_borrowing_overdue",
-        "schedule": crontab(minute="*/1"),
+        "schedule": crontab(minute=0, hour=10),
     },
 }
 
