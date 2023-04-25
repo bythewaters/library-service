@@ -8,7 +8,7 @@ from library_service import settings
 
 
 class Borrowing(models.Model):
-    borrow_date = models.DateTimeField()
+    borrow_date = models.DateTimeField(auto_now_add=True)
     expected_return_date = models.DateTimeField()
     actual_return_date = models.DateTimeField(null=True, blank=True)
     books = models.ForeignKey(Book, on_delete=models.CASCADE)
@@ -22,8 +22,7 @@ class Borrowing(models.Model):
     ):
         if borrow_date > expected_return_date:
             raise error_to_raise(
-                {"Return_date_error":
-                    "Expected return date must be after borrow date."}
+                    "Expected return date must be after borrow date."
             )
 
     def clean(self) -> None:
