@@ -30,9 +30,8 @@ class BorrowingCreateSerializer(serializers.ModelSerializer):
             BorrowingCreateSerializer, self
         ).validate(validated_data)
         Borrowing.validate_date(
-            validated_data["borrow_date"],
-            validated_data["expected_return_date"],
-            validated_data["actual_return_date"],
+            validated_data.get("expected_return_date"),
+            validated_data.get("actual_return_date"),
             serializers.ValidationError,
         )
 
@@ -55,9 +54,9 @@ class BorrowingCreateSerializer(serializers.ModelSerializer):
 
     @transaction.atomic
     def create(self, validated_data: dict) -> Borrowing:
-        book = validated_data["books"]
-        borrow_date = validated_data["borrow_date"]
-        expected_return_date = validated_data["expected_return_date"]
+        book = validated_data.get("books")
+        borrow_date = validated_data.get("borrow_date")
+        expected_return_date = validated_data.get("expected_return_date")
         book.inventory -= 1
         book.save()
         borrowing = Borrowing.objects.create(**validated_data)

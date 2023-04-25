@@ -3,7 +3,6 @@ from typing import Type, Optional
 
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils import timezone
 
 from books.models import Book
 from library_service import settings
@@ -16,27 +15,22 @@ class Borrowing(models.Model):
     books = models.ForeignKey(Book, on_delete=models.CASCADE)
     users = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
-    class Meta:
-        unique_together = ("borrow_date", "expected_return_date", "actual_return_date")
-
     @staticmethod
     def validate_date(
-        borrow_date: date,
-        actual_return_date: date,
         expected_return_date: date,
-        error_to_raise: Type[Exception],
+        actual_return_date: date,
+        error_to_raise: Type[ValidationError],
     ):
-        if borrow_date > expected_return_date:
-            raise error_to_raise("Expected return date must be after borrow date.")
+        if expected_return_date < date.today():
+            raise error_to_raise("Return date must be after borrow date!")
 
-        if actual_return_date is not None and expected_return_date < actual_return_date:
+        if actual_return_date and actual_return_date <= date.today():
             raise error_to_raise(
-                "Expected return date cannot be before actual return date."
+                "Actual return date cannot be less or equal borrow date"
             )
 
     def clean(self) -> None:
         Borrowing.validate_date(
-            self.borrow_date,
             self.expected_return_date,
             self.actual_return_date,
             ValidationError,
