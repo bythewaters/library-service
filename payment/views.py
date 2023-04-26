@@ -13,5 +13,6 @@ class PaymentViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = PaymentListSerializer
 
     def get_serializer_class(self) -> Type[Serializer]:
+        """Return serializer depending on the action"""
         if self.action == "retrieve":
             return PaymentDetailSerializer

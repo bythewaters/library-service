@@ -30,6 +30,10 @@ urlpatterns = [
         "api/library/borrowings/",
         include("borrowing.urls", namespace="borrowings"),
     ),
+    path(
+        "api/library/payment/",
+        include("payment.urls", namespace="payment"),
+    ),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "api/doc/swagger/",
