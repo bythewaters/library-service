@@ -8,7 +8,9 @@ from payment.models import Payment
 from payment.serializers import PaymentListSerializer, PaymentDetailSerializer
 
 
-class PaymentViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+class PaymentViewSet(
+    mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet
+):
     model = Payment
     queryset = Payment.objects.all()
     serializer_class = PaymentListSerializer
@@ -18,6 +20,7 @@ class PaymentViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         """Return serializer depending on the action"""
         if self.action == "retrieve":
             return PaymentDetailSerializer
+        return self.serializer_class
 
     def get_queryset(self) -> QuerySet:
         """
@@ -25,5 +28,5 @@ class PaymentViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         or filter payments by user.
         """
         if not self.request.user.is_staff:
-            queryset = Payment.objects.filter(users=self.request.user)
+            return Payment.objects.filter(users=self.request.user)
         return self.queryset

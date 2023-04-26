@@ -49,3 +49,6 @@ class Borrowing(models.Model):
         return super(Borrowing, self).save(
             force_insert, force_update, using, update_fields
         )
+
+    def __str__(self) -> str:
+        return f"{self.books.title} - {self.borrow_date}"
