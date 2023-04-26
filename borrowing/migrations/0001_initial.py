@@ -32,7 +32,8 @@ class Migration(migrations.Migration):
                 (
                     "books",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="books.book"
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="books.book",
                     ),
                 ),
                 (
@@ -45,7 +46,11 @@ class Migration(migrations.Migration):
             ],
             options={
                 "unique_together": {
-                    ("borrow_date", "expected_return_date", "actual_return_date")
+                    (
+                        "borrow_date",
+                        "expected_return_date",
+                        "actual_return_date",
+                    )
                 },
             },
         ),

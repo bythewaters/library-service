@@ -74,7 +74,7 @@ class BorrowingViewSet(
         permission_classes=[permissions.IsAuthenticated],
     )
     def return_book(
-            self, request: Request, pk: Optional[int] = None
+        self, request: Request, pk: Optional[int] = None
     ) -> Response:
         """Endpoint for return book specific borrowing"""
         borrowing = self.get_object()

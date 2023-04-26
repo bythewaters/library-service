@@ -15,8 +15,7 @@ def check_borrowing_overdue():
     """
     today = timezone.now()
     overdue_borrowing = Borrowing.objects.filter(
-        Q(expected_return_date__lte=today) &
-        Q(actual_return_date__isnull=True)
+        Q(expected_return_date__lte=today) & Q(actual_return_date__isnull=True)
     )
 
     for borrowing in overdue_borrowing:

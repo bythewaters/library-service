@@ -13,6 +13,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="borrowing",
             name="expected_return_date",
-            field=models.DateField(blank=True, default=datetime.date(2023, 5, 5)),
+            field=models.DateField(
+                blank=True, default=datetime.date(2023, 5, 5)
+            ),
         ),
     ]

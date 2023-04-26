@@ -27,18 +27,23 @@ class Migration(migrations.Migration):
                 (
                     "status",
                     models.CharField(
-                        choices=[("PENDING", "Hard"), ("PAID", "Soft")], max_length=63
+                        choices=[("PENDING", "Hard"), ("PAID", "Soft")],
+                        max_length=63,
                     ),
                 ),
                 (
                     "type",
                     models.CharField(
-                        choices=[("PAYMENT", "Hard"), ("FINE", "Soft")], max_length=63
+                        choices=[("PAYMENT", "Hard"), ("FINE", "Soft")],
+                        max_length=63,
                     ),
                 ),
                 ("session_url", models.URLField()),
                 ("session_id", models.CharField(max_length=50)),
-                ("money_to_pay", models.DecimalField(decimal_places=2, max_digits=10)),
+                (
+                    "money_to_pay",
+                    models.DecimalField(decimal_places=2, max_digits=10),
+                ),
                 (
                     "borrowing",
                     models.ForeignKey(
