@@ -3,7 +3,6 @@ from typing import Type
 from django.db.models import QuerySet
 from rest_framework import viewsets, mixins, permissions
 from rest_framework.serializers import Serializer
-
 from payment.models import Payment
 from payment.serializers import PaymentListSerializer, PaymentDetailSerializer
 

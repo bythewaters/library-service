@@ -3,6 +3,8 @@ from rest_framework import serializers
 from books.serializers import BookSerializer
 from borrowing.models import Borrowing
 from notifications.telegram_notification import send_to_telegram
+from payment.models import Payment
+from payment.payment_session import create_payment_session
 
 
 class BorrowingSerializer(serializers.ModelSerializer):
@@ -53,11 +55,20 @@ class BorrowingCreateSerializer(serializers.ModelSerializer):
     @transaction.atomic
     def create(self, validated_data: dict) -> Borrowing:
         book = validated_data.get("books")
-        borrow_date = validated_data.get("borrow_date")
         expected_return_date = validated_data.get("expected_return_date")
         book.inventory -= 1
         book.save()
         borrowing = Borrowing.objects.create(**validated_data)
+        borrow_date = borrowing.borrow_date
+        session_url, session_id, borrow_price = create_payment_session(borrowing)
+        Payment.objects.create(
+            status="PENDING",
+            type="PAYMENT",
+            borrowing=borrowing,
+            session_url=session_url,
+            session_id=session_id,
+            money_to_pay=borrow_price
+        )
         send_to_telegram(
             f"Hello, you borrowed book: {book.title}.\n"
             f"Date borrow: {borrow_date}\n"
