@@ -159,6 +159,7 @@ SIMPLE_JWT = {
     # TODO: Change after end works
     "REFRESH_TOKEN_LIFETIME": timedelta(days=100),
     "ROTATE_REFRESH_TOKENS": False,
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZE",
 }
 
 SPECTACULAR_SETTINGS = {

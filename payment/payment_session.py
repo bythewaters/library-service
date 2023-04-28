@@ -9,7 +9,9 @@ from library_service import settings
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-def create_payment_session(borrowing: Borrowing) -> Union[Tuple[str, str, decimal], Response]:
+def create_payment_session(
+        borrowing: Borrowing
+) -> Union[Tuple[str, str, decimal], Response]:
     borrow_price = (
         borrowing.expected_return_date - borrowing.borrow_date
     ).days * borrowing.books.daily_fee
