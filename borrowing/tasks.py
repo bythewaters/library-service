@@ -18,14 +18,13 @@ def check_borrowing_overdue():
         Q(expected_return_date__lte=today) & Q(actual_return_date__isnull=True)
     )
 
+    message = "No borrowings overdue today!"
+
     for borrowing in overdue_borrowing:
-        if borrowing:
-            message = (
-                f"The borrowing of the book"
-                f"{borrowing.books.title} by {borrowing.users.first_name}"
-                f"is overdue.\n The expected return date was\n"
-                f"{borrowing.expected_return_date}."
-            )
-        else:
-            message = "No borrowings overdue today!"
-        send_to_telegram(message)
+        message = (
+            f"The borrowing of the book"
+            f"{borrowing.books.title} by {borrowing.users.first_name}"
+            f"is overdue.\n The expected return date was\n"
+            f"{borrowing.expected_return_date}."
+        )
+    send_to_telegram(message)
