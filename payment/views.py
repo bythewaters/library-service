@@ -40,6 +40,7 @@ class PaymentViewSet(
         detail=False,
     )
     def success(self, request: Request) -> Response:
+        """Action for success payment"""
         session_id = request.query_params.get("session_id", False)
         payment = Payment.objects.get(session_id=session_id)
         session = stripe.checkout.Session.retrieve(session_id)
@@ -64,6 +65,7 @@ class PaymentViewSet(
         detail=False,
     )
     def cancel(self, request: Request) -> Response:
+        """Action for not success payment"""
         session_id = request.query_params.get("session_id", False)
         session = stripe.checkout.Session.retrieve(session_id)
         if not session.payment_status == "PAID":
