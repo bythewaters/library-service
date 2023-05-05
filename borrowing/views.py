@@ -80,7 +80,10 @@ class BorrowingViewSet(
         borrowing = self.get_object()
         book = borrowing.books
         serializer = self.get_serializer(
-            borrowing, data=request.data, partial=True
+            borrowing,
+            data=request.data,
+            partial=True,
+            context={"pk": pk}
         )
         serializer.is_valid(raise_exception=True)
         book.inventory += 1

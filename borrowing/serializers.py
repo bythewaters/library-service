@@ -85,10 +85,12 @@ class BorrowingReturnBookSerializer(BorrowingSerializer):
         fields = ["actual_return_date"]
 
     def validate(self, attrs: dict) -> dict:
+        pk = self.context.get("pk")
         actual_return_date = attrs["actual_return_date"]
-
-        if actual_return_date:
+        borrowing = Borrowing.objects.get(id=pk)
+        if borrowing.actual_return_date:
             raise serializers.ValidationError(
                 {"Borrowings": "This book already returned"}
             )
+        borrowing.actual_return_date = actual_return_date
         return attrs
