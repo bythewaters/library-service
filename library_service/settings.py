@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
+import sys
 from datetime import timedelta
 from pathlib import Path
 
@@ -182,7 +183,11 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 
-TELEGRAM_API_TOKEN = os.getenv("TELEGRAM_API_TOKEN")
+if "test" in sys.argv:
+    TELEGRAM_API_TOKEN = None
+else:
+    TELEGRAM_API_TOKEN = os.getenv("TELEGRAM_API_TOKEN")
+
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 # Celery Configuration Options
