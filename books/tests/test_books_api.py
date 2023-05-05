@@ -90,7 +90,7 @@ class StaffUsersApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
 
-    def test_forbidden_create_book(self):
+    def test_allowed_create_book(self):
         data = {
             "title": "Test",
             "author": "TestAuthor",
@@ -102,7 +102,7 @@ class StaffUsersApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
-    def test_forbidden_update_book(self):
+    def test_allowed_update_book(self):
         book = sample_book()
         data = {
             "title": "AnotherTitle"
