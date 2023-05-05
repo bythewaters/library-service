@@ -93,26 +93,6 @@ class AuthenticatedBorrowingsApiTests(TestCase):
         self.assertNotIn(serializer1.data, res.data)
         self.assertIn(serializer2.data, res.data)
 
-    def test_borrowings_filter_by_users(self):
-        book = Book.objects.create(
-            title="BookTest2",
-            author="TestAuthor2",
-            cover="HARD",
-            inventory=4,
-            daily_fee=0.17,
-        )
-        user = get_user_model().objects.create_user("test2@gmail.com", "password")
-        borrowing1 = sample_borrowing(users=self.user)
-        borrowing2 = sample_borrowing(users=user, books=book)
-
-        serializer1 = BorrowingSerializer(borrowing1)
-        serializer2 = BorrowingSerializer(borrowing2)
-
-        res = self.client.get(BORROWINGS_URL)
-
-        self.assertIn(serializer1.data, res.data)
-        self.assertNotIn(serializer2.data, res.data)
-
     def test_retrieve_borrowing_detail(self):
         borrowing = sample_borrowing(users=self.user)
         res = self.client.get(BORROWINGS_URL + f"{borrowing.id}/")
@@ -176,3 +156,49 @@ class AuthenticatedBorrowingsApiTests(TestCase):
         borrowing.refresh_from_db()
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(book.inventory, borrowing.books.inventory)
+
+
+class AdminBorrowingApiTests(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.user = get_user_model().objects.create_user(
+            "test@test.com",
+            "password",
+        )
+        self.client.force_authenticate(self.user)
+        self.user.is_staff = True
+
+    def test_list_borrowings_all_users(self):
+        user1 = get_user_model().objects.create_user(
+            "test@test1.com",
+            "password1",
+        )
+        user2 = get_user_model().objects.create_user(
+            "test@test2.com",
+            "password2",
+        )
+        sample_borrowing(users=user1)
+        sample_borrowing(users=user2)
+        res = self.client.get(BORROWINGS_URL)
+        borrowings = Borrowing.objects.order_by("id")
+        serializer = BorrowingSerializer(borrowings, many=True)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, serializer.data)
+
+    def test_filter_borrowings_by_user_id(self):
+        book1 = Book.objects.create(
+            title="BookTest2",
+            author="TestAuthor2",
+            cover="HARD",
+            inventory=4,
+            daily_fee=0.17,
+        )
+        user = get_user_model().objects.create_user("test123@gmail.com", "password1")
+        borrowing2 = sample_borrowing(users=user, books=book1)
+        serializer2 = BorrowingSerializer(borrowing2)
+
+        res = self.client.get(BORROWINGS_URL, {"user_id": user.id})
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertIn(serializer2.data, res.data)
