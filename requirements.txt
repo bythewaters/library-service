@@ -26,6 +26,7 @@ jsonschema==4.17.3
 kombu==5.2.4
 mccabe==0.7.0
 prompt-toolkit==3.0.38
+psycopg2-binary==2.9.6
 pycodestyle==2.10.0
 pyflakes==3.0.1
 PyJWT==2.6.0
