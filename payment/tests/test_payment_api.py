@@ -59,8 +59,13 @@ class CreatePaymentSessionTestCase(TestCase):
             cancel_url=settings.PAYMENT_FAILED_URL,
         )
 
-        with patch("stripe.checkout.Session.create", return_value=mock_session):
-            session_url, session_id, borrow_price = create_payment_session(borrowing)
+        with patch(
+                "stripe.checkout.Session.create",
+                return_value=mock_session
+        ):
+            session_url, session_id, borrow_price = create_payment_session(
+                borrowing
+            )
 
         payment = Payment.objects.create(
             status="PENDING",

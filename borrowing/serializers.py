@@ -60,7 +60,9 @@ class BorrowingCreateSerializer(serializers.ModelSerializer):
         book.save()
         borrowing = Borrowing.objects.create(**validated_data)
         borrow_date = borrowing.borrow_date
-        session_url, session_id, borrow_price = create_payment_session(borrowing)
+        session_url, session_id, borrow_price = create_payment_session(
+            borrowing
+        )
         Payment.objects.create(
             status="PENDING",
             type="PAYMENT",

@@ -55,7 +55,7 @@ class PaymentViewSet(
             {
                 "status": "error",
                 "message": "Payment not success",
-             },
+            },
             status=status.HTTP_400_BAD_REQUEST
         )
 
@@ -72,7 +72,8 @@ class PaymentViewSet(
             return Response(
                 {
                     "status": "Cancel payment",
-                    "message": "You can be paid a bit later (but the session is available for only 24h)",
+                    "message": "You can be paid a bit later "
+                               "(but the session is available for only 24h)",
                 },
                 status=status.HTTP_303_SEE_OTHER
             )
