@@ -1,0 +1,126 @@
+[
+  {
+    "model": "books.book",
+    "pk": 1,
+    "title": "Harry Potter and Philosopher's Stone",
+    "author": "Joanne Rowling",
+    "cover": "HARD",
+    "inventory": 6,
+    "daily_fee": "0.12"
+  },
+  {
+    "model": "books.book",
+    "pk": 2,
+    "title": "Harry Potter and Chamber of Secrets",
+    "author": "Joanne Rowling",
+    "cover": "HARD",
+    "inventory": 0,
+    "daily_fee": "0.12"
+  },
+  {
+    "model": "books.book",
+    "pk": 3,
+    "title": "Harry Potter and Prisoner of Azkaban",
+    "author": "Joanne Rowling",
+    "cover": "HARD",
+    "inventory": 33,
+    "daily_fee": "0.12"
+  },
+  {
+    "model": "books.book",
+    "pk": 4,
+    "title": "Harry Potter and Goblet of Fire",
+    "author": "Joanne Rowling",
+    "cover": "HARD",
+    "inventory": 23,
+    "daily_fee": "0.12"
+  },
+  {
+    "model": "books.book",
+    "pk": 5,
+    "title": "Eragon",
+    "author": "Christopher Paolini",
+    "cover": "HARD",
+    "inventory": 32,
+    "daily_fee": "0.15"
+  },
+  {
+    "model": "books.book",
+    "pk": 6,
+    "title": "Eragon Eldest",
+    "author": "Christopher Paolini",
+    "cover": "HARD",
+    "inventory": 22,
+    "daily_fee": "0.15"
+  },
+  {
+    "model": "books.book",
+    "pk": 7,
+    "title": "Eragon Brisingr",
+    "author": "Christopher Paolini",
+    "cover": "HARD",
+    "inventory": 12,
+    "daily_fee": "0.15"
+  },
+  {
+    "model": "books.book",
+    "pk": 8,
+    "title": "The Games of Thrones",
+    "author": "George R. R. Martin",
+    "cover": "HARD",
+    "inventory": 1,
+    "daily_fee": "0.2"
+  },
+  {
+    "model": "books.book",
+    "pk": 9,
+    "title": "The Last Thing He Told Me: A Novel",
+    "author": "Laura Nowlin",
+    "cover": "SOFT",
+    "inventory": 32,
+    "daily_fee": "0.14"
+  },
+  {
+    "model": "books.book",
+    "pk": 10,
+    "title": "Happy Place (B&N Exclusive Edition)",
+    "author": "Emily Henry",
+    "cover": "SOFT",
+    "inventory": 25,
+    "daily_fee": "0.15"
+  },
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$ucvRntBpMZBTvHNIoNa5nH$tb762txgOhyo/veOvxnvMNu8q0P8LdPxXlQidPAaVh4=",
+      "last_login": null,
+      "is_superuser": true,
+      "first_name": "Admin",
+      "last_name": "LastAdmin",
+      "email": "admin@admin.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2022-08-09T09:06:18.876Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$ctPtDfIc3F9NNBPfBGlfe9$hUEceLnDnvcSfBetPGugjmHUTZftafB5OfetdG3gMYM=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "TestUser",
+      "last_name": "UserTest",
+      "email": "test@user.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2022-08-09T09:06:18.876Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]
