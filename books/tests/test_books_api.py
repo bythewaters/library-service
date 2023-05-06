@@ -67,6 +67,12 @@ class NotStaffUsersApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
 
+    def test_forbidden_delete_book(self):
+        book = sample_book()
+        res = self.client.delete(path=BOOKS_URL + f"{book.id}/")
+
+        self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
+
 
 class StaffUsersApiTests(TestCase):
     def setUp(self):
@@ -110,3 +116,8 @@ class StaffUsersApiTests(TestCase):
         res = self.client.patch(path=BOOKS_URL + f"{book.id}/", data=data)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_allowed_delete_book(self):
+        book = sample_book()
+        res = self.client.delete(path=BOOKS_URL + f"{book.id}/")
+        self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
