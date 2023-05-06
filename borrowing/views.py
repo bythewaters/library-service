@@ -1,6 +1,8 @@
 from typing import Type, Optional
 
 from django.db.models import QuerySet
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets, mixins, permissions, status
 from rest_framework.decorators import action
 from rest_framework.request import Request
@@ -90,3 +92,23 @@ class BorrowingViewSet(
         book.save()
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                "user_id",
+                type={"type": "list", "items": {"type": "number"}},
+                description="Filter borrowings by user id (ex. ?user_id=2). "
+                            "Only if user admin or staff",
+            ),
+            OpenApiParameter(
+                "is_active",
+                type=OpenApiTypes.STR,
+                description="Filter by closed borrowing"
+                            "(if actual_return_date not null) "
+                            "(ex. ?is_active=true)",
+            ),
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
