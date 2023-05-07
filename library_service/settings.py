@@ -140,6 +140,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+MEDIA_URL = "/media/"
+MEDIA_ROOT = "/vol/web/media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -192,12 +194,13 @@ CELERY_BEAT_SCHEDULE = {
 if "test" in sys.argv:
     TELEGRAM_API_TOKEN = None
 else:
-    TELEGRAM_API_TOKEN = os.getenv("TELEGRAM_API_TOKEN")
+    TELEGRAM_API_TOKEN = "6271792553:AAGthcMncS_Bi18E6rwlcx5xbT-t8DEIqUM"
 
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 # Celery Configuration Options
-CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
 CELERY_TIMEZONE = "Europe/Kiev"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
