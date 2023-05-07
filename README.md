@@ -15,14 +15,14 @@
 - Docker app starts only when db is available ( custom command via management/commands )
 
 ## Installing using GitHub:
--Install Postgres and create DB
+ - Install Postgres and create DB
+ - Open .env.sample and change enviroment variables on yours !Rename file from .env_sample to .env
 
 ```shell
 git clone https://github.com/bythewaters/library-service.git
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-open .env.sample and change enviroment variables on yours !Rename file from .env.sample to .env
 python manage.py migrate
 python manage.py runserver
 ```
