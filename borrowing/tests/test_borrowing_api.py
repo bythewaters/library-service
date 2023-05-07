@@ -30,8 +30,8 @@ def sample_borrowing(**params):
         "borrow_date": date.today(),
         "expected_return_date": date.today() + timedelta(days=10),
         "actual_return_date": None,
-        "books": book,
-        "users": None,
+        "book": book,
+        "user": None,
     }
     defaults.update(params)
 
@@ -65,8 +65,8 @@ class AuthenticatedBorrowingsApiTests(TestCase):
             daily_fee=0.17,
         )
 
-        sample_borrowing(users=self.user)
-        sample_borrowing(users=self.user, books=book)
+        sample_borrowing(user=self.user)
+        sample_borrowing(user=self.user, book=book)
 
         res = self.client.get(BORROWINGS_URL)
 
@@ -86,10 +86,10 @@ class AuthenticatedBorrowingsApiTests(TestCase):
         )
 
         borrowing1 = sample_borrowing(
-            users=self.user,
+            user=self.user,
             actual_return_date=date.today() + timedelta(days=5)
         )
-        borrowing2 = sample_borrowing(users=self.user, books=book)
+        borrowing2 = sample_borrowing(user=self.user, book=book)
         res = self.client.get(BORROWINGS_URL, {"is_active": "true"})
 
         serializer1 = BorrowingSerializer(borrowing1)
@@ -99,7 +99,7 @@ class AuthenticatedBorrowingsApiTests(TestCase):
         self.assertIn(serializer2.data, res.data)
 
     def test_retrieve_borrowing_detail(self):
-        borrowing = sample_borrowing(users=self.user)
+        borrowing = sample_borrowing(user=self.user)
         res = self.client.get(BORROWINGS_URL + f"{borrowing.id}/")
         serializer = BorrowingDetailSerializer(borrowing)
 
@@ -117,7 +117,7 @@ class AuthenticatedBorrowingsApiTests(TestCase):
 
         defaults = {
             "expected_return_date": date.today() + timedelta(days=10),
-            "books": book.id,
+            "book": book.id,
         }
         res = self.client.post(path=BORROWINGS_URL, data=defaults)
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
@@ -132,12 +132,12 @@ class AuthenticatedBorrowingsApiTests(TestCase):
         )
         defaults = {
             "expected_return_date": date.today() + timedelta(days=10),
-            "books": book.id,
+            "book": book.id,
         }
         res = self.client.post(path=BORROWINGS_URL, data=defaults)
-        book2 = Borrowing.objects.get(books=book)
+        book2 = Borrowing.objects.get(book=book)
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-        self.assertNotEqual(book2.books.inventory, book.inventory)
+        self.assertNotEqual(book2.book.inventory, book.inventory)
 
     def test_increase_book_inventory_after_return_book(self):
         book = Book.objects.create(
@@ -149,18 +149,18 @@ class AuthenticatedBorrowingsApiTests(TestCase):
         )
         defaults = {
             "expected_return_date": date.today() + timedelta(days=10),
-            "books": book.id,
+            "book": book.id,
         }
         self.client.post(path=BORROWINGS_URL, data=defaults)
-        borrowing = Borrowing.objects.get(books=book)
-        self.assertNotEqual(book.inventory, borrowing.books.inventory)
+        borrowing = Borrowing.objects.get(book=book)
+        self.assertNotEqual(book.inventory, borrowing.book.inventory)
         res = self.client.patch(
-            path=BORROWINGS_URL + f"{borrowing.id}/return-book/",
+            path=BORROWINGS_URL + f"{borrowing.id}/return/",
             data={"actual_return_date": date.today() + timedelta(days=7)},
         )
         borrowing.refresh_from_db()
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(book.inventory, borrowing.books.inventory)
+        self.assertEqual(book.inventory, borrowing.book.inventory)
 
 
 class AdminBorrowingApiTests(TestCase):
@@ -182,8 +182,8 @@ class AdminBorrowingApiTests(TestCase):
             "test@test2.com",
             "password2",
         )
-        sample_borrowing(users=user1)
-        sample_borrowing(users=user2)
+        sample_borrowing(user=user1)
+        sample_borrowing(user=user2)
         res = self.client.get(BORROWINGS_URL)
         borrowings = Borrowing.objects.order_by("id")
         serializer = BorrowingSerializer(borrowings, many=True)
@@ -203,7 +203,7 @@ class AdminBorrowingApiTests(TestCase):
             "test123@gmail.com",
             "password1"
         )
-        borrowing2 = sample_borrowing(users=user, books=book1)
+        borrowing2 = sample_borrowing(user=user, book=book1)
         serializer2 = BorrowingSerializer(borrowing2)
 
         res = self.client.get(BORROWINGS_URL, {"user_id": user.id})

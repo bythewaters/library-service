@@ -7,8 +7,8 @@ from borrowing.models import Borrowing
 @admin.register(Borrowing)
 class FeedBackAdmin(ModelAdmin):
     list_display = (
-        "users",
-        "books",
+        "user",
+        "book",
         "borrow_date",
         "expected_return_date",
         "actual_return_date",

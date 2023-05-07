@@ -16,14 +16,14 @@ FINE_MULTIPLIER = 2
 def create_payment_session(
     borrowing: Borrowing,
 ) -> Union[Tuple[str, str, decimal], Response]:
-    message = borrowing.books.author
+    message = borrowing.book.author
     borrow_price = (
         borrowing.expected_return_date - borrowing.borrow_date
-    ).days * borrowing.books.daily_fee
+    ).days * borrowing.book.daily_fee
     if borrowing.expected_return_date < datetime.date.today():
         fine_price = (
             (datetime.date.today() - borrowing.expected_return_date).days
-            * borrowing.books.daily_fee
+            * borrowing.book.daily_fee
             * FINE_MULTIPLIER
         )
         borrow_price += fine_price
@@ -38,7 +38,7 @@ def create_payment_session(
                     "currency": "usd",
                     "unit_amount": int(borrow_price * 100),
                     "product_data": {
-                        "name": borrowing.books.title,
+                        "name": borrowing.book.title,
                         "description": message,
                     },
                 },
