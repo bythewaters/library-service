@@ -31,7 +31,7 @@ class PaymentViewSet(
         or filter payments by user.
         """
         if not self.request.user.is_staff:
-            return Payment.objects.filter(users=self.request.user)
+            return Payment.objects.filter(borrowing__users=self.request.user)
         return self.queryset
 
     @action(

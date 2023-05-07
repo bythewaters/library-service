@@ -119,7 +119,7 @@
       "first_name": "Admin",
       "last_name": "LastAdmin",
       "email": "admin@admin.com",
-      "is_staff": false,
+      "is_staff": true,
       "is_active": true,
       "date_joined": "2022-08-09T09:06:18.876Z",
       "groups": [],
@@ -130,7 +130,7 @@
     "model": "users.user",
     "pk": 2,
     "fields": {
-      "password": "pbkdf2_sha256$600000$ctPtDfIc3F9NNBPfBGlfe9$hUEceLnDnvcSfBetPGugjmHUTZftafB5OfetdG3gMYM=",
+      "password": "pbkdf2_sha256$600000$sE5ZVVgl09j9bFVSbjEfyT$BJYPaSD5M8Mm9ZigcVd4OlSONualF1F6kivQ/ymI4nA=",
       "last_login": null,
       "is_superuser": false,
       "first_name": "TestUser",
