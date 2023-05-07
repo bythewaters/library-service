@@ -20,6 +20,7 @@
 
 ```shell
 git clone https://github.com/bythewaters/library-service.git
+cd library-service
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
