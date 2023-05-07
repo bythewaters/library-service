@@ -7,7 +7,7 @@
       "author": "Joanne Rowling",
       "cover": "HARD",
       "inventory": 6,
-      "daily_fee": "0.12"
+      "daily_fee": "4"
     }
   },
   {
@@ -18,7 +18,7 @@
       "author": "Joanne Rowling",
       "cover": "HARD",
       "inventory": 0,
-      "daily_fee": "0.12"
+      "daily_fee": "4"
     }
   },
   {
@@ -29,7 +29,7 @@
       "author": "Joanne Rowling",
       "cover": "HARD",
       "inventory": 33,
-      "daily_fee": "0.12"
+      "daily_fee": "4"
     }
   },
   {
@@ -40,7 +40,7 @@
       "author": "Joanne Rowling",
       "cover": "HARD",
       "inventory": 23,
-      "daily_fee": "0.12"
+      "daily_fee": "4"
     }
   },
   {
@@ -51,7 +51,7 @@
       "author": "Christopher Paolini",
       "cover": "HARD",
       "inventory": 32,
-      "daily_fee": "0.15"
+      "daily_fee": "3"
     }
   },
   {
@@ -62,7 +62,7 @@
       "author": "Christopher Paolini",
       "cover": "HARD",
       "inventory": 22,
-      "daily_fee": "0.15"
+      "daily_fee": "4"
     }
   },
   {
@@ -73,7 +73,7 @@
       "author": "Christopher Paolini",
       "cover": "HARD",
       "inventory": 12,
-      "daily_fee": "0.15"
+      "daily_fee": "3"
     }
   },
   {
@@ -84,7 +84,7 @@
       "author": "George R. R. Martin",
       "cover": "HARD",
       "inventory": 1,
-      "daily_fee": "0.2"
+      "daily_fee": "2"
     }
   },
   {
@@ -95,7 +95,7 @@
       "author": "Laura Nowlin",
       "cover": "SOFT",
       "inventory": 32,
-      "daily_fee": "0.14"
+      "daily_fee": "4"
     }
   },
   {
@@ -106,7 +106,7 @@
       "author": "Emily Henry",
       "cover": "SOFT",
       "inventory": 25,
-      "daily_fee": "0.15"
+      "daily_fee": "3"
     }
   },
   {
