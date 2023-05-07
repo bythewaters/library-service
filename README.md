@@ -56,9 +56,7 @@ Add the Telegram BOT to your group using name `@MyPythonProjectNot_Bot`
 - docker-compose up
 ```
 - Use the following command to load prepared data from fixture in docker(if you need):
-  - `docker ps`(copy name or id docker container)
-  - `docker exec -t -i <docker_name_or_id> sh`
-  - `python manage.py loaddata library_service_data.json`.
+  `docker-compose run --rm app python manage.py loaddata library_service_data.json`
 
 ## Getting access:
 - Create user via /api/user/register/
