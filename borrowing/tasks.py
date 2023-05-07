@@ -23,7 +23,7 @@ def check_borrowing_overdue():
     for borrowing in overdue_borrowing:
         message = (
             f"The borrowing of the book"
-            f"{borrowing.books.title} by {borrowing.users.first_name}"
+            f"{borrowing.book.title} by {borrowing.user.first_name}"
             f"is overdue.\n The expected return date was\n"
             f"{borrowing.expected_return_date}."
         )

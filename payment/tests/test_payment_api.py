@@ -30,8 +30,8 @@ class CreatePaymentSessionTestCase(TestCase):
             daily_fee=9.99,
         )
         borrowing = Borrowing.objects.create(
-            books=book,
-            users=self.user,
+            book=book,
+            user=self.user,
             borrow_date=date.today(),
             expected_return_date=date.today() + timedelta(days=2),
             actual_return_date=None,
@@ -47,7 +47,7 @@ class CreatePaymentSessionTestCase(TestCase):
                         "currency": "usd",
                         "unit_amount": 9.99,
                         "product_data": {
-                            "name": borrowing.books.title,
+                            "name": borrowing.book.title,
                             "description": "Book borrowing fee",
                         },
                     },

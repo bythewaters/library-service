@@ -40,11 +40,11 @@ class BorrowingViewSet(
         queryset = self.queryset
 
         if not self.request.user.is_staff:
-            queryset = Borrowing.objects.filter(users=self.request.user)
+            queryset = Borrowing.objects.filter(user=self.request.user)
 
         if self.request.user.is_staff:
             if user_id:
-                queryset = queryset.filter(users_id=user_id)
+                queryset = queryset.filter(user_id=user_id)
 
         if is_active:
             if is_active.lower() == "true":
@@ -67,12 +67,12 @@ class BorrowingViewSet(
 
     def perform_create(self, serializer: Serializer[Borrowing]) -> None:
         """Create borrowing only for current user"""
-        serializer.save(users=self.request.user)
+        serializer.save(user=self.request.user)
 
     @action(
         methods=["PATCH"],
         detail=True,
-        url_path="return-book",
+        url_path="return",
         permission_classes=[permissions.IsAuthenticated],
     )
     def return_book(
@@ -80,7 +80,7 @@ class BorrowingViewSet(
     ) -> Response:
         """Endpoint for return book specific borrowing"""
         borrowing = self.get_object()
-        book = borrowing.books
+        book = borrowing.book
         serializer = self.get_serializer(
             borrowing,
             data=request.data,
@@ -97,13 +97,13 @@ class BorrowingViewSet(
         parameters=[
             OpenApiParameter(
                 "user_id",
-                type={"type": "list", "items": {"type": "number"}},
+                type=OpenApiTypes.INT,
                 description="Filter borrowings by user id (ex. ?user_id=2). "
                             "Only if user admin or staff",
             ),
             OpenApiParameter(
                 "is_active",
-                type=OpenApiTypes.STR,
+                type=OpenApiTypes.BOOL,
                 description="Filter by closed borrowing"
                             "(if actual_return_date not null) "
                             "(ex. ?is_active=true)",
