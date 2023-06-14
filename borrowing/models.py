@@ -51,4 +51,4 @@ class Borrowing(models.Model):
         )
 
     def __str__(self) -> str:
-        return f"{self.books.title} - {self.borrow_date}"
+        return f"{self.book.title} - {self.borrow_date}"
